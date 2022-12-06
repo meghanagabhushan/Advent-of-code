@@ -63,24 +63,21 @@ def perform_operations(all_stacks):
     return all_stacks
 
 def perform_operations2(all_stacks):
-    for s in all_stacks:
-        if ' ' in s:
-            s.remove(" ")
-    print(all_stacks)
+    for idx,elem in enumerate(all_stacks):
+        if ' ' in elem:
+            elem = elem.remove(' ')
+            all_stacks[idx] = elem
     for op in operations:
         num = int(op.split(" ")[1])
         source_ind = int(op.split(" ")[3])-1
         dest_ind = int(op.split(" ")[5])-1
-        i=1
         elements_to_be_popped = all_stacks[source_ind][:num]
-        print(elements_to_be_popped)        
+        elements_to_be_popped = [i for i in elements_to_be_popped if i!=' ']  
         for e in elements_to_be_popped:
             all_stacks[source_ind].remove(e)
-            # all_stacks[source_ind] = list(map(lambda x: x.replace(e, ' '), all_stacks[source_ind]))
         elements_to_be_popped = list(reversed(elements_to_be_popped))
         for e in elements_to_be_popped:
             all_stacks[dest_ind].insert(0,e)
-        print(all_stacks)
     return all_stacks
 
 def get_first_element(res):
@@ -100,11 +97,17 @@ def get_first_element(res):
 def main():
     data = get_file_lines_as_list(input_file)
     all_stacks = []
+    all_stacks2 = []
     for indices in indices_of_elements:
         column_stack = []
+        column_stack2 = []
         for line in data:
             column_stack.append(line[indices])
+            if line[indices]!=' ':
+                column_stack2.append(line[indices])
         all_stacks.append(column_stack)
+        all_stacks2.append(column_stack2)
+
     print(all_stacks)
     res = perform_operations(all_stacks)
     print(all_stacks)
@@ -112,7 +115,7 @@ def main():
     print("solution 1")
     print(solution1)
     print("solution 2")
-    res2 = perform_operations2(all_stacks)
+    res2 = perform_operations2(all_stacks2)
     solution2 = get_first_element(res2)
     print(solution2)
 
