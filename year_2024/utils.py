@@ -8,3 +8,9 @@ def get_file_as_str(filename):
     with open(filename) as file:
         content = file.read()
     return content
+
+def read_file_into_matrix(filename):
+    matrix = []
+    with open(filename, 'r') as f:
+        matrix = [list(line.strip()) for line in f]
+    return matrix
